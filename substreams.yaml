@@ -1,6 +1,6 @@
 specVersion: v0.1.0
 package:
-  name: 'substreams_ethereum_quickstart'
+  name: 'humilis_substream'
   version: v1.0.0
 
 protobuf:
