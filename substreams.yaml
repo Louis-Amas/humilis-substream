@@ -5,7 +5,7 @@ package:
 
 protobuf:
   files:
-    - call.proto
+    - block.proto
   importPaths:
     - ./proto
 
@@ -20,4 +20,4 @@ modules:
     inputs:
       - source: sf.ethereum.type.v2.Block
     output:
-      type: proto:acme.call.v1.BlockCall
+      type: proto:acme.call.v1.BlockHeader
