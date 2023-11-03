@@ -13,7 +13,8 @@ pub struct StorageChange {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BalanceChange {
-    /// bytes address = 1;
+    #[prost(bytes="vec", tag="1")]
+    pub address: ::prost::alloc::vec::Vec<u8>,
     /// optional bytes old_value = 2;
     #[prost(bytes="vec", optional, tag="3")]
     pub new_value: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
@@ -23,23 +24,27 @@ pub struct BalanceChange {
 pub struct Call {
     /// uint32 index = 1;
     /// uint32 parent_index = 2;
-    /// CallType call_type = 3;
-    /// bytes caller = 4;
-    ///
+    #[prost(enumeration="CallType", tag="3")]
+    pub call_type: i32,
+    #[prost(bytes="vec", tag="4")]
+    pub caller: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="5")]
+    pub address: ::prost::alloc::vec::Vec<u8>,
     /// optional bytes value = 6;
     /// uint64 gas_limit = 7;
     /// uint64 gas_consumed = 8;
     ///
-    /// bytes return_data = 9;
-    /// bytes input = 10;
+    #[prost(bytes="vec", tag="9")]
+    pub return_data: ::prost::alloc::vec::Vec<u8>,
     ///
     /// bool exectued_code = 11;
     /// bool suicide = 12;
-    #[prost(bytes="vec", tag="5")]
-    pub address: ::prost::alloc::vec::Vec<u8>,
-    /// repeated BalanceChange balance_changes = 14;
+    #[prost(bytes="vec", tag="10")]
+    pub input: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, repeated, tag="13")]
     pub storage_changes: ::prost::alloc::vec::Vec<StorageChange>,
+    #[prost(message, repeated, tag="14")]
+    pub balance_changes: ::prost::alloc::vec::Vec<BalanceChange>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

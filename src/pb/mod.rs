@@ -8,3 +8,10 @@ pub mod acme {
         }
     }
 }
+pub mod sf {
+    // @@protoc_insertion_point(attribute:sf.substreams)
+    pub mod substreams {
+        include!("sf.substreams.rs");
+        // @@protoc_insertion_point(sf.substreams)
+    }
+}

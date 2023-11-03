@@ -36,7 +36,7 @@ fn get_balance_change(raw_balance_changes: Vec<substream_lib::BalanceChange>) ->
 
     for change in raw_balance_changes.into_iter() {
         balance_changes.push(BalanceChange { 
-            // address: change.address, 
+            address: change.address, 
             // old_value: change.old_value.map(|val| val.bytes), 
             new_value: change.new_value.map(|val| val.bytes), 
             // reason: change.reason,
@@ -53,18 +53,18 @@ fn get_calls(raw_calls: Vec<substream_lib::Call>) -> Vec<Call> {
         calls.push(Call { 
             // index: call.index, 
             // parent_index: call.parent_index, 
-            // call_type: call.call_type, 
-            // caller: call.caller, 
+            call_type: call.call_type, 
+            caller: call.caller, 
             address: call.address, 
             // value: call.value.map(|val| val.bytes), 
             // gas_limit: call.gas_limit, 
             // gas_consumed: call.gas_consumed, 
-            // return_data: call.return_data, 
-            // input: call.input, 
+            return_data: call.return_data, 
+            input: call.input,
             // exectued_code: call.executed_code, 
             // suicide: call.suicide, 
             storage_changes: get_storage_changes(call.keccak_preimages, call.storage_changes), 
-            // balance_changes: get_balance_change(call.balance_changes) 
+            balance_changes: get_balance_change(call.balance_changes) 
         })
     }
 

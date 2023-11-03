@@ -34,7 +34,7 @@ enum BalanceChangeReason {
 }
 
 message BalanceChange {
-  // bytes address = 1;
+  bytes address = 1;
   // optional bytes old_value = 2;
   optional bytes new_value = 3;
 
@@ -55,21 +55,21 @@ enum CallType {
 message Call {
   // uint32 index = 1;
   // uint32 parent_index = 2;
-  // CallType call_type = 3;
-  // bytes caller = 4;
+  CallType call_type = 3;
+  bytes caller = 4;
   bytes address = 5;
   // optional bytes value = 6;
   // uint64 gas_limit = 7;
   // uint64 gas_consumed = 8;
   //
-  // bytes return_data = 9;
-  // bytes input = 10;
+  bytes return_data = 9;
+  bytes input = 10;
   //
   // bool exectued_code = 11;
   // bool suicide = 12;
 
   repeated StorageChange storage_changes = 13;
-  // repeated BalanceChange balance_changes = 14;
+  repeated BalanceChange balance_changes = 14;
 } 
   
 message Log {
