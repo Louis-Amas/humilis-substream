@@ -1,44 +1,45 @@
 pub mod contracts {
-
-    pub mod tokens {
-        include!("erc20.rs");
-    }
-
-    use ethers::{prelude::Lazy, types::H256};
-    
     use std::collections::HashMap;
+
+    use alloy_json_abi::JsonAbi;
+
+
+    const CONTRACT_NAMES: [(&'static str, &'static str); 1] = [
+        ("ERC20", include_str!("../../abi/erc20.abi.json")),
+    ];
+
     use lazy_static::lazy_static;
 
-    lazy_static! {
-        pub static ref NAME_TO_CONTRACTS: HashMap<&'static str, &'static Lazy<ethers::core::abi::Abi>> = {
-            let mut m = HashMap::new();
-            m.insert("ERC20", &tokens::ERC20_ABI);
-            m
-        };
-    }
 
     lazy_static! {
-        pub static ref EVENTS_SIGNATURE_TO_CONTRACTS: HashMap<H256, Vec<(&'static str, &'static Lazy<ethers::core::abi::Abi>)>> = {
+        // pub static ref ERC20_ABI: (&'static str, JsonAbi) = generate_abi_from_string("ERC20", include_str!("../../abi/erc20.abi.json"));
+        pub static ref EVENTS_SIGNATURE_TO_CONTRACTS: HashMap<String, Vec<(String,JsonAbi)>> = {
             let mut m = HashMap::new();
 
-            for key in NAME_TO_CONTRACTS.keys() {
-                let contract = NAME_TO_CONTRACTS.get(key).unwrap();
+            for contract in CONTRACT_NAMES.iter() {
+                let abi: JsonAbi = serde_json::from_str(contract.1).unwrap();
 
-                for event in contract.events().into_iter() {
+                for event in abi.events() {
                     let signature = event.signature();
-                    let vector_options = m.get_mut(&signature);
-                    if vector_options.is_none() {
-                        let mut contracts_and_keys = Vec::new();
-                        contracts_and_keys.push((*key, *contract));
-                        m.insert(signature, contracts_and_keys);
-                    } else {
-                        let contracts_and_keys = vector_options.unwrap();
-                        contracts_and_keys.push((*key, *contract));
-                    }
+
+                    // Creating a new vector if the signature is not found
+                    let abi_and_keys = m.entry(signature.clone()).or_insert(Vec::new());
+
+                    // Add the current contract name and ABI to the vector
+                    abi_and_keys.push((contract.0.to_string(), abi.clone()));
                 }
             }
             m
         };
     }
 
+
+    #[test]
+    fn test() {
+        assert_eq!(EVENTS_SIGNATURE_TO_CONTRACTS.len(), 4);
+
+        for contracts in EVENTS_SIGNATURE_TO_CONTRACTS.values() {
+            assert_eq!(contracts.get(0).unwrap().0, "ERC20");
+        }
+    }
 }

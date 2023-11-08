@@ -2,7 +2,6 @@ mod pb;
 
 mod generated;
 use generated::contracts::EVENTS_SIGNATURE_TO_CONTRACTS;
-use substreams_ethereum::block_view::LogView;
 
 use std::collections::HashMap;
 
@@ -152,6 +151,7 @@ fn get_transaction_traces(raw_transactions: Vec<substream_lib::TransactionTrace>
 fn map_block(block: eth::v2::Block) -> Result<BlockHeader, substreams::errors::Error> {
     let timestamp = block.timestamp_seconds();
     let block_header = block.header.unwrap();
+
     Ok(BlockHeader {
         parent_hash: block_header.parent_hash,
         // uncle_hash: block_header.uncle_hash,
