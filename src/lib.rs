@@ -1,5 +1,9 @@
 mod pb;
 
+mod generated;
+use generated::contracts::EVENTS_SIGNATURE_TO_CONTRACTS;
+use substreams_ethereum::block_view::LogView;
+
 use std::collections::HashMap;
 
 use pb::acme::call::v1::{BlockHeader, TransactionTrace, Call, StorageChange, BalanceChange, TransactionReceipt, Log};
@@ -7,6 +11,24 @@ use prost::Message;
 use substreams::Hex;
 use substreams_ethereum::pb::eth::{self};
 use substreams_ethereum::pb::eth::v2 as substream_lib;
+
+// fn get_logs(logs: Vec<LogView>) -> String {
+//     let mut str: String = "".to_string();
+//     for log in logs.into_iter() {
+//         str = format!("{},{}", str, log.address().len());
+//     }
+//
+//     "".into()
+// }
+//
+//
+// #[substreams::handlers::map]
+// fn map_block(block: eth::v2::Block) -> Result<String, substreams::errors::Error> {
+//     let logs: Vec<LogView> = block.logs().collect();
+//     get_logs(logs);
+//
+//     Ok("".to_string())
+// }
 
 fn get_storage_changes(keccak_preimages: HashMap<String, String>, storage_changes: Vec<substream_lib::StorageChange>) -> Vec<StorageChange> {
     let mut changes: Vec<StorageChange> = Vec::new();
