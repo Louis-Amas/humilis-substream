@@ -98,32 +98,34 @@ pub struct TransactionTrace {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BlockHeader {
     #[prost(bytes="vec", tag="1")]
-    pub parent_hash: ::prost::alloc::vec::Vec<u8>,
-    /// bytes uncle_hash = 2;
-    /// bytes coinbase = 3;
-    /// bytes state_root = 4;
-    /// bytes transaction_root = 5;
-    #[prost(bytes="vec", tag="6")]
-    pub logs_bloom: ::prost::alloc::vec::Vec<u8>,
-    // optional bytes difficulty = 7;
-    // optional bytes total_difficulty = 8;
-
-    // uint64 number = 9;
-    // uint64 gas_limit = 10;
-    // uint64 gas_used = 11;
-
-    #[prost(uint64, tag="12")]
-    pub timestamp: u64,
-    /// bytes extra_data = 13;
-    /// bytes mix_hash = 14;
-    /// uint64 nonce = 15;
-    #[prost(bytes="vec", tag="16")]
     pub hash: ::prost::alloc::vec::Vec<u8>,
-    // optional bytes base_fee_per_gas = 17;
-    // bytes withdrawals_root = 18;
-
-    #[prost(message, repeated, tag="19")]
-    pub transactions: ::prost::alloc::vec::Vec<TransactionTrace>,
+    /// bytes parent_hash = 1;
+    /// // bytes uncle_hash = 2;
+    /// // bytes coinbase = 3;
+    /// // bytes state_root = 4;
+    /// // bytes transaction_root = 5;
+    /// bytes logs_bloom = 6;
+    ///
+    /// // optional bytes difficulty = 7;
+    /// // optional bytes total_difficulty = 8;
+    ///
+    /// // uint64 number = 9;
+    /// // uint64 gas_limit = 10;
+    /// // uint64 gas_used = 11;
+    ///
+    /// uint64 timestamp = 12;
+    ///
+    /// // bytes extra_data = 13;
+    /// // bytes mix_hash = 14;
+    /// // uint64 nonce = 15;
+    /// bytes hash = 16;
+    ///
+    /// // optional bytes base_fee_per_gas = 17;
+    /// // bytes withdrawals_root = 18;
+    ///
+    /// repeated TransactionTrace transactions = 19;
+    #[prost(string, tag="2")]
+    pub test: ::prost::alloc::string::String,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

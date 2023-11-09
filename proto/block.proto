@@ -121,29 +121,31 @@ message TransactionTrace {
 }
 
 message BlockHeader {
-  bytes parent_hash = 1;
-  // bytes uncle_hash = 2;
-  // bytes coinbase = 3;
-  // bytes state_root = 4;
-  // bytes transaction_root = 5;
-  bytes logs_bloom = 6;
-
-  // optional bytes difficulty = 7;
-  // optional bytes total_difficulty = 8;
-
-  // uint64 number = 9;
-  // uint64 gas_limit = 10;
-  // uint64 gas_used = 11;
-
-  uint64 timestamp = 12;
-
-  // bytes extra_data = 13;
-  // bytes mix_hash = 14;
-  // uint64 nonce = 15;
-  bytes hash = 16;
-
-  // optional bytes base_fee_per_gas = 17;
-  // bytes withdrawals_root = 18;
-
-  repeated TransactionTrace transactions = 19;
+  bytes hash = 1;
+  string test = 2;
+  // bytes parent_hash = 1;
+  // // bytes uncle_hash = 2;
+  // // bytes coinbase = 3;
+  // // bytes state_root = 4;
+  // // bytes transaction_root = 5;
+  // bytes logs_bloom = 6;
+  //
+  // // optional bytes difficulty = 7;
+  // // optional bytes total_difficulty = 8;
+  //
+  // // uint64 number = 9;
+  // // uint64 gas_limit = 10;
+  // // uint64 gas_used = 11;
+  //
+  // uint64 timestamp = 12;
+  //
+  // // bytes extra_data = 13;
+  // // bytes mix_hash = 14;
+  // // uint64 nonce = 15;
+  // bytes hash = 16;
+  //
+  // // optional bytes base_fee_per_gas = 17;
+  // // bytes withdrawals_root = 18;
+  //
+  // repeated TransactionTrace transactions = 19;
 }
