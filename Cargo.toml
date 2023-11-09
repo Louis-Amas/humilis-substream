@@ -1,25 +1,3 @@
-[package]
-name = "humilis_substream"
-version = "1.0.0"
-rust-version = "1.73"
-edition = "2021"
-
-[lib]
-name = "substreams"
-crate-type = ["cdylib"]
-
-[dependencies]
-substreams = "0.5"
-substreams-ethereum = "0.9"
-prost = "0.11"
-prost-types = "0.11.8"
-substreams-database-change = "1.3.0"
-lazy_static = "1.4.0"
-alloy-json-abi = "0.4.2"
-serde_json = "1.0.108"
-alloy-primitives = "0.4.2"
-
-[profile.release]
-lto = true
-opt-level = 's'
-strip = "debuginfo"
+[workspace]
+members = ["substreams", "scripts"]
+resolver = "2"

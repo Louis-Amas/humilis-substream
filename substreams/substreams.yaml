@@ -1,0 +1,23 @@
+specVersion: v0.1.0
+package:
+  name: 'humilis_substream'
+  version: v1.0.0
+
+protobuf:
+  files:
+    - block.proto
+  importPaths:
+    - ./proto
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ./target/wasm32-unknown-unknown/release/substreams.wasm
+
+modules:
+  - name: map_block
+    kind: map
+    inputs:
+      - source: sf.ethereum.type.v2.Block
+    output:
+      type: proto:acme.call.v1.BlockHeader

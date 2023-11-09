@@ -1,0 +1,15 @@
+[package]
+name = "humilis_scripts"
+version = "1.0.0"
+rust-version = "1.73"
+edition = "2021"
+
+
+[[bin]]
+name = "initialize_db"
+path = "./src/initialize_db.rs"
+test = false
+bench = false
+
+[dependencies]
+sqlx = { version = "0.7", features = [ "runtime-tokio", "tls-native-tls" ] }
