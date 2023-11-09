@@ -1,5 +1,5 @@
 [package]
-name = "humilis_scripts"
+name = "humilis-scripts"
 version = "1.0.0"
 rust-version = "1.73"
 edition = "2021"
@@ -13,3 +13,4 @@ bench = false
 
 [dependencies]
 sqlx = { version = "0.7", features = [ "runtime-tokio", "tls-native-tls" ] }
+humilis-substreams = { path = "../substreams" }

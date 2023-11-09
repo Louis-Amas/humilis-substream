@@ -909,14 +909,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "humilis_scripts"
-version = "1.0.0"
-dependencies = [
- "sqlx",
-]
-
-[[package]]
-name = "humilis_substream"
+name = "humilis-substreams"
 version = "1.0.0"
 dependencies = [
  "alloy-json-abi",
@@ -928,6 +921,14 @@ dependencies = [
  "substreams",
  "substreams-database-change",
  "substreams-ethereum",
+]
+
+[[package]]
+name = "humilis_scripts"
+version = "1.0.0"
+dependencies = [
+ "humilis-substreams",
+ "sqlx",
 ]
 
 [[package]]

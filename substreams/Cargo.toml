@@ -1,5 +1,5 @@
 [package]
-name = "humilis_substream"
+name = "humilis-substreams"
 version = "1.0.0"
 rust-version = "1.73"
 edition = "2021"
