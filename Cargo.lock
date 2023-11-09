@@ -909,6 +909,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "humilis-scripts"
+version = "1.0.0"
+dependencies = [
+ "humilis-substreams",
+ "sqlx",
+]
+
+[[package]]
 name = "humilis-substreams"
 version = "1.0.0"
 dependencies = [
@@ -921,14 +929,6 @@ dependencies = [
  "substreams",
  "substreams-database-change",
  "substreams-ethereum",
-]
-
-[[package]]
-name = "humilis_scripts"
-version = "1.0.0"
-dependencies = [
- "humilis-substreams",
- "sqlx",
 ]
 
 [[package]]

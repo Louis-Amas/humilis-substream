@@ -6,8 +6,8 @@ edition = "2021"
 
 
 [[bin]]
-name = "initialize_db"
-path = "./src/initialize_db.rs"
+name = "initialize-db"
+path = "./src/initialize-db.rs"
 test = false
 bench = false
 
