@@ -1,13 +1,11 @@
 mod pb;
 
-mod contracts;
-
 use substreams_ethereum::block_view::LogView;
 
 use pb::acme::call::v1::BlockHeader;
 use substreams_ethereum::pb::eth::{self};
 
-use crate::contracts::contracts::EVENTS_SELECTOR_TO_ABI;
+use abis::contracts::EVENTS_SELECTOR_TO_ABI;
 
 fn handle_logs(logs: Vec<LogView>) -> String {
 
