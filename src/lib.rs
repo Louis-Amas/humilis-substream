@@ -13,23 +13,26 @@ use substreams_ethereum::pb::eth::{self};
 use substreams_ethereum::pb::eth::v2 as substream_lib;
 
 fn handle_logs(logs: Vec<LogView>) -> String {
-    let mut str: String = "test".to_string();
+
+    let mut transfer_count = 0;
+    let mut log_count = 0;
     for log_receipt in logs.into_iter() {
-        for log in log_receipt.receipt.logs() {
-            if let Some(selector) = log.topics().get(0) {
-                if let Some(items) = EVENTS_SELECTOR_TO_ABI.get(selector.as_slice()) {
-                    for item in items {
-                        str += item.name.as_str(); 
-                        str += item.signature.as_str(); 
+        log_count += 1;
+        if let Some(topic0) = log_receipt.log.topics.get(0) {
+            if let Some(items) = EVENTS_SELECTOR_TO_ABI.get(topic0.as_slice()) {
+                for item in items {
+                    if item.signature.contains("Transfer") {
+                        transfer_count += 1;
                     }
                 }
-            } else {
-                continue;
             }
+        } else {
+            continue;
         }
+        
     }
 
-    str
+    format!("{} {} transfers", log_count, transfer_count)
 }
 
 #[substreams::handlers::map]
