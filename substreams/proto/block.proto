@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+package acme.call.v1;
+
+message StorageChange {
+  // bytes address = 1;
+  // bytes key = 2;
+
+  bytes preimg = 3;
+
+  // bytes old_value = 4;
+  bytes new_value = 5;
+}
+
+enum BalanceChangeReason {
+  BalanceChangeReasonUnknown = 0;
+  RewardMineUncle = 1;
+  RewardMineBlock = 2;
+  DaoRefundContract = 3;
+  DaoAdjustBalance = 4;
+  Transfer = 5;
+  GenesisBalance = 6;
+  GasBuy = 7;
+  RewardTransactionFee = 8;
+  RewardFeeReset = 14;
+  GasRefund = 9;
+  TouchAccount = 10;
+  SuicideRefund = 11;
+  SuicideWithdraw = 13;
+  CallBalanceOverride = 12;
+  /// Used on chain(s) where some Ether burning happens
+  Burn = 15;
+  Withdrawal = 16;
+}
+
+message BalanceChange {
+  bytes address = 1;
+  // optional bytes old_value = 2;
+  optional bytes new_value = 3;
+
+  // BalanceChangeReason reason = 4;
+}
+
+enum CallType {
+  Unspecified = 0;
+  /// direct? what's the name for `Call` alone?
+  NormalCall = 1;
+  Callcode = 2;
+  Delegate = 3;
+  Static = 4;
+  /// create2 ? any other form of calls?
+  Create = 5;
+}
+
+message Call {
+  // uint32 index = 1;
+  // uint32 parent_index = 2;
+  CallType call_type = 3;
+  bytes caller = 4;
+  bytes address = 5;
+  // optional bytes value = 6;
+  // uint64 gas_limit = 7;
+  // uint64 gas_consumed = 8;
+  //
+  bytes return_data = 9;
+  bytes input = 10;
+  //
+  // bool exectued_code = 11;
+  // bool suicide = 12;
+
+  repeated StorageChange storage_changes = 13;
+  repeated BalanceChange balance_changes = 14;
+} 
+  
+message Log {
+  // bytes address = 1;
+  repeated bytes topics = 2;
+  bytes data = 3;
+  // uint32 index = 4;
+
+  // uint32 block_index = 5; // if it's 0 then it means this log has been reverted
+}
+
+message TransactionReceipt {
+  // bytes state_root = 1;
+  // uint64 cumulative_gas_used = 2;
+  // bytes logs_bloom = 3;
+
+  repeated Log logs = 4;
+}
+
+enum TransactionTraceStatus {
+    Unknown = 0;
+    Succeeded = 1;
+    Failed = 2;
+    Reverted = 3;
+}
+
+message TransactionTrace {
+  bytes to = 1;
+  // uint64 nonce = 2;
+  // optional bytes gas_price = 3;
+  // uint64 gas_limit = 4;
+  // bytes input = 5;
+  // uint64 gas_used = 6;
+  // int32 type = 7;
+  //
+  // optional bytes max_fee_per_gas = 8;
+  // optional bytes max_priority_fee_per_gas = 9;
+  //
+  // uint32 index = 10;
+  TransactionTraceStatus status = 11;
+
+  bytes hash = 12; 
+  bytes from = 13; 
+
+  bytes return_data = 14;
+
+  optional TransactionReceipt receipt = 15;
+  repeated Call calls = 16;
+}
+
+message BlockHeader {
+  bytes hash = 1;
+  string test = 2;
+  // bytes parent_hash = 1;
+  // // bytes uncle_hash = 2;
+  // // bytes coinbase = 3;
+  // // bytes state_root = 4;
+  // // bytes transaction_root = 5;
+  // bytes logs_bloom = 6;
+  //
+  // // optional bytes difficulty = 7;
+  // // optional bytes total_difficulty = 8;
+  //
+  // // uint64 number = 9;
+  // // uint64 gas_limit = 10;
+  // // uint64 gas_used = 11;
+  //
+  // uint64 timestamp = 12;
+  //
+  // // bytes extra_data = 13;
+  // // bytes mix_hash = 14;
+  // // uint64 nonce = 15;
+  // bytes hash = 16;
+  //
+  // // optional bytes base_fee_per_gas = 17;
+  // // bytes withdrawals_root = 18;
+  //
+  // repeated TransactionTrace transactions = 19;
+}

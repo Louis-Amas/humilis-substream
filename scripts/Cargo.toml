@@ -1,0 +1,18 @@
+[package]
+name = "humilis-scripts"
+version = "1.0.0"
+rust-version = "1.73"
+edition = "2021"
+
+
+[[bin]]
+name = "initialize-db"
+path = "./src/initialize-db.rs"
+test = false
+bench = false
+
+[dependencies]
+dotenv = "0.15.0"
+sqlx = { version = "0.7", features = [ "runtime-tokio", "tls-native-tls", "postgres" ] }
+substreams = { path = "../substreams" }
+tokio =  { version = "1.33.0", features = ["macros", "rt", "rt-multi-thread"]}
