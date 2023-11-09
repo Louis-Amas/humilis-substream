@@ -7,7 +7,7 @@ pub mod contracts {
 
 
     const CONTRACT_NAMES: [(&'static str, &'static str); 1] = [
-        ("ERC20", include_str!("../../abi/erc20.abi.json")),
+        ("ERC20", include_str!("../abi/erc20.abi.json")),
     ];
 
     use lazy_static::lazy_static;
@@ -19,7 +19,6 @@ pub mod contracts {
     }
 
     lazy_static! {
-        // pub static ref ERC20_ABI: (&'static str, JsonAbi) = generate_abi_from_string("ERC20", include_str!("../../abi/erc20.abi.json"));
         pub static ref EVENTS_SELECTOR_TO_ABI: HashMap<B256, Vec<EventItem>> = {
             let mut m = HashMap::new();
 
