@@ -4,8 +4,8 @@ CREATE DOMAIN ethereum_hash AS varchar(66);
 CREATE TABLE block_header (
     hash ethereum_hash PRIMARY KEY,
     parent_hash ethereum_hash,
-    logs_bloom BYTEA,
-    timestamp BIGINT,
+    logs_bloom TEXT,
+    timestamp timestamp,
     number INT
 );
 
