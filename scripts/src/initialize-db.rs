@@ -44,7 +44,7 @@ async fn initialize_db(pool: Pool<Postgres>) {
     }
 
     for future in futures.into_iter() {
-        let _ = future.await.unwrap();
+        let _ = future.await;
     }
 
     futures = Vec::new();
@@ -54,7 +54,7 @@ async fn initialize_db(pool: Pool<Postgres>) {
     }
 
     for future in futures.into_iter() {
-        let _ = future.await.unwrap();
+        let _ = future.await;
     }
 }
 
