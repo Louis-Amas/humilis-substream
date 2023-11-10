@@ -49,6 +49,9 @@ CREATE TABLE log (
   topic3 BYTEA,
   decoded_topic3 TEXT,
 
+  topic4 BYTEA,
+  decoded_topic4 TEXT,
+
   data BYTEA,
   decoded_data TEXT,
 
