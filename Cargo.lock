@@ -934,6 +934,7 @@ dependencies = [
 name = "humilis-scripts"
 version = "1.0.0"
 dependencies = [
+ "abis",
  "dotenv",
  "sqlx",
  "substreams 1.0.0",

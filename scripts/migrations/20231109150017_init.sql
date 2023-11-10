@@ -1,4 +1,4 @@
-CREATE TABLE block_header (
+CREATE TABLE IF NOT EXISTS block_header (
     hash BYTEA PRIMARY KEY,
     parent_hash BYTEA,
     logs_bloom BYTEA,
@@ -6,29 +6,30 @@ CREATE TABLE block_header (
     number INT
 );
 
--- CREATE TABLE interface (
---   name TEXT PRIMARY KEY
--- );
+CREATE TABLE IF NOT EXISTS interface (
+  name TEXT PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS event_type (
+  signature TEXT PRIMARY KEY,
+  selector BYTEA
+);
+
+CREATE TABLE IF NOT EXISTS mapping_event_interface (
+  name TEXT,
+  signature TEXT,
+  FOREIGN KEY (name) REFERENCES interface(name),
+  FOREIGN KEY (signature) REFERENCES event_type(signature),
+
+  PRIMARY KEY (name, signature)
+);
 --
--- CREATE TABLE event_type (
---   signature TEXT PRIMARY KEY
--- );
---
--- CREATE TABLE mapping_event_interface (
---   name TEXT,
---   signature TEXT,
---   FOREIGN KEY (name) REFERENCES interface(name),
---   FOREIGN KEY (signature) REFERENCES event_type(signature),
---
---   PRIMARY KEY (name, signature)
--- );
---
--- CREATE TABLE contract (
+-- CREATE TABLE IF NOT EXISTS contract (
 --   address ethereum_address PRIMARY KEY,
 --   createdAt time
 -- );
 --
--- CREATE TABLE log (
+-- CREATE TABLE IF NOT EXISTS log (
 --   block_hash ethereum_hash,
 --   address ethereum_address,
 --
@@ -61,7 +62,7 @@ CREATE TABLE block_header (
 --   PRIMARY KEY(address, index)
 -- );
 
-CREATE TABLE cursors
+CREATE TABLE IF NOT EXISTS cursors
 (
     id         text not null constraint cursor_pk PRIMARY KEY,
     cursor     text,

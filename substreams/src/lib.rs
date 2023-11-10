@@ -1,7 +1,13 @@
 mod pb;
 
-use substreams_database_change::{pb::database::{DatabaseChanges, table_change::Operation}, change::AsString};
-use substreams_ethereum::{block_view::LogView, pb::eth::{self, v2::BlockHeader}};
+use substreams_database_change::{
+    change::AsString,
+    pb::database::{table_change::Operation, DatabaseChanges},
+};
+use substreams_ethereum::{
+    block_view::LogView,
+    pb::eth::{self, v2::BlockHeader},
+};
 
 use abis::contracts::EVENTS_SELECTOR_TO_ABI;
 
@@ -21,20 +27,22 @@ use abis::contracts::EVENTS_SELECTOR_TO_ABI;
 //         } else {
 //             continue;
 //         }
-//         
+//
 //     }
 //
 //     format!("{} {} transfers", log_count, transfer_count)
 // }
 
-fn push_create(
-    changes: &mut DatabaseChanges,
-    header: BlockHeader,
-) {
+fn push_create(changes: &mut DatabaseChanges, header: BlockHeader) {
     let hash = header.hash;
     let timestamp = header.timestamp.unwrap();
     changes
-        .push_change("block_header", hash.clone().as_string(), 1, Operation::Create)
+        .push_change(
+            "block_header",
+            hash.clone().as_string(),
+            1,
+            Operation::Create,
+        )
         .change("hash", (None, hash))
         .change("parent_hash", (None, header.parent_hash))
         .change("logs_bloom", (None, header.logs_bloom))
@@ -43,9 +51,7 @@ fn push_create(
 }
 
 #[substreams::handlers::map]
-fn db_out(
-    block: eth::v2::Block,
-) -> Result<DatabaseChanges, substreams::errors::Error> {
+fn db_out(block: eth::v2::Block) -> Result<DatabaseChanges, substreams::errors::Error> {
     let mut changes: DatabaseChanges = Default::default();
 
     push_create(&mut changes, block.header.unwrap());

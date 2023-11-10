@@ -5,10 +5,8 @@ pub mod contracts {
 
     use alloy_primitives::B256;
 
-
-    const CONTRACT_NAMES: [(&'static str, &'static str); 1] = [
-        ("ERC20", include_str!("../abi/erc20.abi.json")),
-    ];
+    const CONTRACT_NAMES: [(&'static str, &'static str); 1] =
+        [("ERC20", include_str!("../abi/erc20.abi.json"))];
 
     use lazy_static::lazy_static;
 
@@ -19,11 +17,22 @@ pub mod contracts {
     }
 
     lazy_static! {
+        pub static ref ABIS: HashMap<String, Pin<Box<JsonAbi>>> = {
+            let mut m = HashMap::new();
+
+            for contract in CONTRACT_NAMES.into_iter() {
+                let abi: Pin<Box<JsonAbi>> = Pin::new(Box::new(serde_json::from_str(contract.1).unwrap()));
+
+                m.insert(contract.0.to_string(), abi);
+            }
+            m
+        };
+
         pub static ref EVENTS_SELECTOR_TO_ABI: HashMap<B256, Vec<EventItem>> = {
             let mut m = HashMap::new();
 
             for contract in CONTRACT_NAMES.iter() {
-                let abi: Pin<Box<JsonAbi>> = Pin::new(Box::new(serde_json::from_str(contract.1).unwrap()));
+                let abi: &Pin<Box<JsonAbi>> = ABIS.get(contract.0).unwrap();
 
                 for event in abi.events() {
                     // Creating a new vector if the signature is not found
@@ -43,7 +52,6 @@ pub mod contracts {
         };
     }
 
-
     #[test]
     fn test() {
         assert_eq!(EVENTS_SELECTOR_TO_ABI.len(), 4);
@@ -55,6 +63,5 @@ pub mod contracts {
             println!("{}", selector);
             println!("{}", value.signature);
         }
-
     }
 }
