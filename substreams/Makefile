@@ -7,10 +7,6 @@ ENDPOINT ?= mainnet.eth.streamingfast.io:443
 build:
 	cargo build --target wasm32-unknown-unknown --release
 
-.PHONY: protogen
-protogen:
-	substreams protogen ./substreams.yaml --exclude-paths="sf/substreams,google"
-
 .PHONY: stream_db_out
 stream_db_out: build
 	substreams run -e $(ENDPOINT) substreams.yaml db_out -t +10
