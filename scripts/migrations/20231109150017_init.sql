@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS block_header (
     parent_hash BYTEA,
     logs_bloom BYTEA,
     timestamp timestamp,
-    number INT
+    number INT unique
 );
 
 CREATE TABLE IF NOT EXISTS interface (
@@ -23,11 +23,20 @@ CREATE TABLE IF NOT EXISTS mapping_event_interface (
 
   PRIMARY KEY (name, signature)
 );
---
--- CREATE TABLE IF NOT EXISTS contract (
---   address ethereum_address PRIMARY KEY,
---   createdAt time
--- );
+
+CREATE TABLE IF NOT EXISTS contract_storage (
+  id TEXT PRIMARY KEY,
+
+  address TEXT,
+
+  slot numeric(78,0),
+  old_value numeric(78,0),
+  new_value numeric(78,0),
+
+  block_number INTEGER,
+
+  FOREIGN KEY (block_number) REFERENCES block_header(number)
+);
 --
 -- CREATE TABLE IF NOT EXISTS log (
 --   block_hash ethereum_hash,
